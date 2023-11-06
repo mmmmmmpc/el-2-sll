@@ -6,3 +6,6 @@
   
 /etc/dnf/protected.d/redhat-release.conf:
   file.absent
+
+sll-release:
+  pkg.installed
