@@ -36,12 +36,12 @@ function usage()
     cat << EOT >&2
 
   Usage: $0 <registration URL> [--regcert <url>] [--regdata <filename>] [--de-register]
-  Usage: $0 --host <hostname of the RMT server> [--regcert <url>] [--regdata <filename>] [--de-register]
-  Usage: $0 --host <hostname of the RMT server> [--fingerprint <fingerprint of server cert>] [--yes] [--regdata <filename>] [--de-register]
+  Usage: $0 --host <hostname of the SUMA server> [--regcert <url>] [--regdata <filename>] [--de-register]
+  Usage: $0 --host <hostname of the SUMA server> [--fingerprint <fingerprint of server cert>] [--yes] [--regdata <filename>] [--de-register]
          configures a SLE client to register against a different registration server
 
-  Example: $0 https://rmt.example.com/
-  Example: $0 --host rmt.example.com --regcert http://rmt.example.com/certs/rmt.crt
+  Example: $0 https://suma.example.com/
+  Example: $0 --host suma.example.com --regcert http://suma.example.com/certs/rmt.crt
 EOT
 
 exit 1
@@ -111,7 +111,7 @@ function import_key
 
 function import_signing_keys()
 {
-    TMPDIR=`mktemp -d /tmp/rmtsetup-XXXXXXXX`;
+    TMPDIR=`mktemp -d /tmp/sumasetup-XXXXXXXX`;
 
     if [ -z $TMPDIR ]; then
         echo "Cannot create tmpdir for key import in /tmp. Abort."
@@ -126,7 +126,7 @@ function import_signing_keys()
             if [[ $i == *.key ]]; then
                 http_get_key_file $i
                 if [ $? -eq 22 ]; then
-                    echo "Custom key '$i' on RMT server is not accessible. Check permissions."
+                    echo "Custom key '$i' on SUMA server is not accessible. Check permissions."
                     continue
                 else
                     import_key $i
@@ -135,7 +135,7 @@ function import_signing_keys()
         done
     elif [ $retcode -ne 22 ]; then
       local key_file_url=`echo "$REGURL/$1" | awk -F/ '{print "https://" $3 "/repo/keys/" $4}'`
-      echo "An error occurred reading the custom rpm key directory $key_file_url. Please ensure this directory exists, is readable to RMT and contains rpm signing keys if you wish to import custom rpm signing keys."
+      echo "An error occurred reading the custom rpm key directory $key_file_url. Please ensure this directory exists, is readable to SUMA and contains rpm signing keys if you wish to import custom rpm signing keys."
     fi
 
     rm -rf $TMPDIR/
@@ -277,7 +277,7 @@ if [ ! -x $GPG ]; then
 fi
 
 
-TEMPFILE=`mktemp /tmp/rmt.crt.XXXXXX`
+TEMPFILE=`mktemp /tmp/suma.crt.XXXXXX`
 
 if [ -x $CURL ]; then
     $CURL --tlsv1.2 --silent --insecure --connect-timeout 10 --output $TEMPFILE $CERTURL
@@ -311,8 +311,8 @@ else
 fi
 
 if [ -d $CA_TRUSTSTORE ]; then
-    $CP $TEMPFILE $CA_TRUSTSTORE/rmt-server.pem
-    $CHMOD 0644 $CA_TRUSTSTORE/rmt-server.pem
+    $CP $TEMPFILE $CA_TRUSTSTORE/suma-server.pem
+    $CHMOD 0644 $CA_TRUSTSTORE/suma-server.pem
 
     $CA_GEN_TRUSTSTORE_CMD > /dev/null
 fi
