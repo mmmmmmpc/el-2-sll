@@ -26,6 +26,6 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
   - The high state apply with apply the configuration channel and migrate the machine to Liberty Linux
 
 ### For already registered minions
-- Hacked the change channels feature to allow change channel to SLL9 (needs to be refactored, since the code is now hard coding the channel label)
+- Hacked the change channels feature to allow change channel to SLL9 (needs to be refactored, since the code is now hard coding the channel label) - https://github.com/rjmateus/uyuni/tree/uyuni_hackweek23_rhel_migration
 - Assign the Configuration channel
 - Apply high state to system
