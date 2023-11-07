@@ -25,6 +25,12 @@ remove_release_package:
 
 {% endif %}
 
+{% if osName == 'AlmaLinux' %}
+/usr/share/almalinux-release/:
+  file.absent
+
+{% endif %}
+
 install_package_9:
   pkg.installed:
     - name: sll-release
@@ -32,7 +38,7 @@ install_package_9:
 
 re_install_from_SLL:
   cmd.run:
-    - name: "dnf reinstall '*' -y"
+    - name: "dnf -x 'venv-salt-minion' reinstall '*' -y >> /var/log/dnf_sll_migration.log"
 
 {% endif %}
 
@@ -51,7 +57,7 @@ install_package_lt9:
 
 #re_install_from_SLL:
 #  cmd.run:
-#    - name: "dnf reinstall '*' -y"
+#    - name: "dnf -x 'venv-salt-minion' reinstall '*' -y >> /var/log/dnf_sll_migration.log"
 
 {% endif %}
 

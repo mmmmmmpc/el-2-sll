@@ -14,7 +14,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
   - remove `/usr/share/redhat-release`: DONE
   - remove `/etc/dnf/protected.d/redhat-release.conf`: DONE
   - install SLL package: DONE
-  - re-install all packages from SLL channels (develop a script to check it)
+  - re-install all packages from SLL channels: DONE (missing manually verify if signature have changed)
 - Assign the configuration channel to the activation key
 
 ### For new minions
@@ -23,8 +23,9 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
   - Onboard using webUI and select the activation key
 - Configuration channel and software channels should be assigned automatically by the activation key
 - Apply high state and the minion will be migrate to SLL/SLES-ES
+  - The high state apply with apply the configuration channel and migrate the machine to Liberty Linux
 
 ### For already registered minions
-- Explore options
-  - re-activation key to apply activation key
-  - adapt software channel change to allow changes channels to different products (we should have special checks to see if is possible). We also need to verify clonned channels
+- Hacked the change channels feature to allow change channel to SLL9 (needs to be refactored, since the code is now hard coding the channel label)
+- Assign the Configuration channel
+- Apply high state to system
