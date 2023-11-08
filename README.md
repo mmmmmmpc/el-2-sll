@@ -15,7 +15,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
 
 ## Configuring SUSE Manager
 - Provide SUSE Customer Center credentials
-  - Log in in [SUSE Customer Center ](https://scc.suse.com)
+  - Log in in [SUSE Customer Center](https://scc.suse.com)
     - Go to `My Organization`, select your organization
     - Go to `Users` -> `Organization Credentials` and copy your Organization Username and Password
   - In your own instance of SUSE Manager
@@ -32,7 +32,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
 - Create one Activation Key per SUSE Liberty Linux channel
   - Note: Activation Keys are the way to register systems and assign them to the software and configuration channels corresponding to them
   - Go to `Systems` -> `Activation Keys` and click on the top right message `+ Create key`
-  - Add: 
+  - Then, to the new Activation Key, add the following content: 
     - `Description`: with some tech describing the acitvation key
     - `Key`: With the identifier for the key, for example `el9-default` for your EL9 systems
       - Note: Keis will have a nimeric prefix depending ont he organization so that there are not to equal keys in the same SUSE Manager
