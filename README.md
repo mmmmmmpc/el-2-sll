@@ -124,13 +124,13 @@ Note: Configuration channels could be assigned to any already registered system.
 | Rhel 9      | working |
 | Rocky 9     | working |
 | Alma 9      | working |
-| Oracle 9    | |
+| Oracle 9    | Working |
 | Rhel 8      | |
 | Rocky 8     | |
 | Alma 8      | |
 | Oracle 8    | |
 | Rhel 7      | |
-| Oracle 7    | |
+| CentoOS 7   | |
 | Oracle 7    | |
 
 # Notes

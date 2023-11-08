@@ -54,27 +54,30 @@ re_install_from_SLL:
     - require:
       - pkg: install_package_9
 
-{% endif %}
+{% endif %} # end if for search
 
-{% elif release <= 8 %}
+{% elif release <= 8 %} # end else if of rhel 9
+
+{% if not salt['file.search']('/etc/os-release', 'SLES Expanded Support') %}
 
 /usr/share/redhat-release:
   file.absent
 
-/etc/dnf/protected.d/redhat-release.conf:
-  file.absent
+#/etc/dnf/protected.d/redhat-release.conf:
+#  file.absent
 
 install_package_lt9:
   pkg.installed:
-    - name: sles_es-release
+    - name: sles_es-release-server
     - refresh: True
 
-#re_install_from_SLL:
-#  cmd.run:
-#    - name: "dnf -x 'venv-salt-minion' reinstall '*' -y >> /var/log/dnf_sll_migration.log"
-#    - require:
-#      - pkg: install_package_lt9
+re_install_from_SLL:
+  cmd.run:
+    - name: "yum -x 'venv-salt-minion' -x 'salt-minion' reinstall '*' -y >> /var/log/yum_sles_es_migration.log"
+    - require:
+      - pkg: install_package_lt9
 
-{% endif %}
+{% endif %} # end if for search
+{% endif %} # end if for release <= 8
 
-{% endif %}
+{% endif %} # endif of rhel family
