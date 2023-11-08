@@ -29,6 +29,9 @@ remove_release_package:
 /usr/share/almalinux-release/:
   file.absent
 
+remove_release_package:
+  cmd.run:
+    - name: "rpm -e --nodeps almalinux-release"
 {% endif %}
 
 install_package_9:
@@ -39,6 +42,8 @@ install_package_9:
 re_install_from_SLL:
   cmd.run:
     - name: "dnf -x 'venv-salt-minion' reinstall '*' -y >> /var/log/dnf_sll_migration.log"
+    - require:
+      - pkg: install_package_9
 
 {% endif %}
 
@@ -58,6 +63,8 @@ install_package_lt9:
 #re_install_from_SLL:
 #  cmd.run:
 #    - name: "dnf -x 'venv-salt-minion' reinstall '*' -y >> /var/log/dnf_sll_migration.log"
+#    - require:
+#      - pkg: install_package_lt9
 
 {% endif %}
 

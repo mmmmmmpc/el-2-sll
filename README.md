@@ -80,3 +80,21 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
 - Hacked the change channels feature to allow change channel to SLL9 (needs to be refactored, since the code is now hard coding the channel label) - https://github.com/rjmateus/uyuni/tree/uyuni_hackweek23_rhel_migration
 - Assign the Configuration channel
 - Apply high state to system
+
+
+## Version testing status
+
+
+| OS version  | Status  |
+| ----------- | ------- |
+| Rhel 9      | working |
+| Rocky 9     | working |
+| Alma 9      | working |
+| Oracle 9    | |
+| Rhel 8      | |
+| Rocky 8     | |
+| Alma 8      | |
+| Oracle 8    | |
+| Rhel 7      | |
+| Oracle 7    | |
+| Oracle 7    | |
