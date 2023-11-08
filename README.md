@@ -1,6 +1,6 @@
-# el-2-sll
+# Convert from Enterprise Linux clones to SUSE Liberty Linux using SUSE Manager
 
-Tools to convert from any EL version (RHEL / Rocky / Alma) to SUSE Liberty Linux using SUSE Manager
+Tools to convert from any EL clone (RHEL / Rocky / Alma) to SUSE Liberty Linux using SUSE Manager
 
 Initial build for the Hackweek project:
 https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
@@ -65,12 +65,29 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
   - Select the Activation Key, for example `el9-default` for your EL9 systems
     - In the Activation Key page go to `Configuration` -> `Subscribe to Channel`
     - Select the Channel name, for example `el-2-sll` and click on the low right button `Continue`
-  - Note: Now, when registering any system with this Activation Key, it will automatically subscribe it to the right channels, and run the conversion to SUSE Liberty Linux
+  - Note: Now, when registering any system with this Activation Key, it will automatically subscribe it to the right channels and, by "applying high state", run the conversion to SUSE Liberty Linux.
   
 ### Registering a new system to SUSE Manager and proceed to the conversion
-- Onboard a new system (a.k.a. minion) with the activation key
+- There are two wais to onboard, or register, a new system (a.k.a. minion) with the activation key
+  - Onboarding a new system using webUI and selecting the activation key
+    - Note: This is intended for a one-off registration or for testing purposes
+    - Go to `Systems` -> `Bootstraping` 
+      - In the `Bootstrap Minions` page fill the entries
+      - Note: this will start an SSH connection to the system and run the bootstrap script to register it to SUSE Manager
+      - `Host`: Hostname of the system to onboard
+      - `SSH Port`: Leave blank to use default, which is `22`
+      - `User`: type user or leave blank for `root`
+      - `Authentication Method`: Select if you want to use `password` or provide a `SSH Private Key`
+        - `Password`: If this was selected please provide the password to access the system
+        - `SSH Private Key`: If this was selected please provide the file with the private key 
+          - `SSH Private Key Passphrase`: In case a private key was provided that requires a passphrase to unlock, please provide it here.
+      - `Activation Key`: Select from the menu the Activation key to be used, for example `el9-default`.
+      - `Reactivation Key`: Leave blank it wont be used here
+      - `Proxy`: Leave as `None` as it is used for the SUSE Manager specific proxies.
+      - Click on the `+ Bootstrap` button to start the registration
+      - Note: A message will show in the top of the page stating that the system is being registered, or "bootstraped" in SUSE Manager parlance.
   - Create a bootstrap script using the Activation key
-  - Onboard using webUI and select the activation key
+    - Note: This is intended to be used for mass registration 
 - Configuration channel and software channels should be assigned automatically by the activation key
 - Apply high state and the minion will be migrate to SLL/SLES-ES
   - The high state apply with apply the configuration channel and migrate the machine to Liberty Linux
