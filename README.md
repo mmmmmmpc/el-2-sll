@@ -69,7 +69,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
   
 ### Registering a new system to SUSE Manager and proceed to the conversion
 - There are two wais to onboard, or register, a new system (a.k.a. minion) with the activation key
-  - Onboarding a new system using webUI and selecting the activation key
+  - Onboarding a new system *using webUI* and selecting the activation key
     - Note: This is intended for a one-off registration or for testing purposes
     - Go to `Systems` -> `Bootstraping` 
       - In the `Bootstrap Minions` page fill the entries
@@ -86,13 +86,27 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
       - `Proxy`: Leave as `None` as it is used for the SUSE Manager specific proxies.
       - Click on the `+ Bootstrap` button to start the registration
       - Note: A message will show in the top of the page stating that the system is being registered, or "bootstraped" in SUSE Manager parlance.
-  - Create a bootstrap script using the Activation key
+  - Onboarding a new system using a *bootstrap script* with an assigned Activation key
     - Note: This is intended to be used for mass registration 
+    - In the left menu, go to `Admin` -> `Manager Configuration` -> `Bootstrap Script`, to reach the bootstrap script configuration. Let's fill the fields here.
+      - `SUSE Manager server hostname`: This should be set to the hostname that the client systems (a.k.a. minions) will use to reach SUSE Manager, as well as the SUSE Manager hostname
+        - Note: a Certificate will be used associated to this name for the client systems, as it was configured in the initial setup. If it's changed, a new certificate shall be created
+      - `SSL cert location`: Path, in the SUSE Manager server, to the filename provided as a certificate to register it. Please keep it as it is.
+      - `Bootstrap using Salt`: Select this checkbox to apply salt states, like the one we added via configuration channel. It is required to perform the conversion.
+      - `Enable Client GPG checking`: Select this checkbox to ensure all packages installed come from the proper sources, in this case, SUSE Liberty Linux signed packages.
+      - `Enable Remote Configuration`: Leave unchecked.
+      - `Enable Remote Commands`: Leave unchecked.
+      - `Client HTTP Proxy`: Leave blank. This is in case the client requires a proxy to access the SUSE Manager server.
+      - `Client HTTP Proxy username`: Leave blank.
+      - `Client HTTP Proxy password`: Leave blank.
+      - Click now in the `Update` button to refresh the bootstrap script `bootstrap.sh`
+        - Bootstrap script generated is reachable via web by accesing the server path `/pub/bootstrap/`, for example for a server named `suma.suse.lab` it will be at https://suma.suse.lab/pub/bootstrap/
+        - Accessing SUSE Manager server via SSH the bootstrap script is available in `/srv/www/htdocs/pub/bootstrap/`
 - Configuration channel and software channels should be assigned automatically by the activation key
 - Apply high state and the minion will be migrate to SLL/SLES-ES
   - The high state apply with apply the configuration channel and migrate the machine to Liberty Linux
 
-### For already registered minions
+### For systems that are already registered in SUSE Manager
 - Note: The channel could be assigned to any already registered system on the system's page in `States` -> `Configuration Channels`
 - Hacked the change channels feature to allow change channel to SLL9 (needs to be refactored, since the code is now hard coding the channel label) - https://github.com/rjmateus/uyuni/tree/uyuni_hackweek23_rhel_migration
 - Assign the Configuration channel
