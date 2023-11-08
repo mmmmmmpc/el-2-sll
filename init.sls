@@ -34,6 +34,15 @@ remove_release_package:
     - name: "rpm -e --nodeps almalinux-release"
 {% endif %}
 
+{% if osName == 'OEL' %}
+/usr/share/oraclelinux-release/:
+  file.absent
+
+remove_release_package:
+  cmd.run:
+    - name: "rpm -e --nodeps oraclelinux-release"
+{% endif %}
+
 install_package_9:
   pkg.installed:
     - name: sll-release

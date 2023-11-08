@@ -32,7 +32,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
 - Create one Activation Key per SUSE Liberty Linux channel
   - Note: Activation Keys are the way to register systems and assign them to the software and configuration channels corresponding to them
   - Go to `Systems` -> `Activation Keys` and click on the top right message `+ Create key`
-  - Then, to the new Activation Key, add the following content: 
+  - Then, to the new Activation Key, add the following content:
     - `Description`: with some tech describing the acitvation key
     - `Key`: With the identifier for the key, for example `el9-default` for your EL9 systems
       - Note: Keis will have a nimeric prefix depending ont he organization so that there are not to equal keys in the same SUSE Manager
@@ -61,17 +61,17 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
     - install SLL package: DONE
     - re-install all packages from SLL channels: DONE (missing manually verify if signature have changed)
 - Assign the configuration channel to the activation key
-  - Go to `Systems` -> `Activation Keys` 
+  - Go to `Systems` -> `Activation Keys`
   - Select the Activation Key, for example `el9-default` for your EL9 systems
     - In the Activation Key page go to `Configuration` -> `Subscribe to Channel`
     - Select the Channel name, for example `el-2-sll` and click on the low right button `Continue`
   - Note: Now, when registering any system with this Activation Key, it will automatically subscribe it to the right channels and, by "applying high state", run the conversion to SUSE Liberty Linux.
-  
+
 ### Registering a new system to SUSE Manager and proceed to the conversion
 - There are two wais to onboard, or register, a new system (a.k.a. minion) with the activation key
   - Onboarding a new system *using webUI* and selecting the activation key
     - Note: This is intended for a one-off registration or for testing purposes
-    - Go to `Systems` -> `Bootstraping` 
+    - Go to `Systems` -> `Bootstraping`
       - In the `Bootstrap Minions` page fill the entries
       - Note: this will start an SSH connection to the system and run the bootstrap script to register it to SUSE Manager
       - `Host`: Hostname of the system to onboard
@@ -79,7 +79,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
       - `User`: type user or leave blank for `root`
       - `Authentication Method`: Select if you want to use `password` or provide a `SSH Private Key`
         - `Password`: If this was selected please provide the password to access the system
-        - `SSH Private Key`: If this was selected please provide the file with the private key 
+        - `SSH Private Key`: If this was selected please provide the file with the private key
           - `SSH Private Key Passphrase`: In case a private key was provided that requires a passphrase to unlock, please provide it here.
       - `Activation Key`: Select from the menu the Activation key to be used, for example `el9-default`.
       - `Reactivation Key`: Leave blank it wont be used here
@@ -87,7 +87,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
       - Click on the `+ Bootstrap` button to start the registration
       - Note: A message will show in the top of the page stating that the system is being registered, or "bootstraped" in SUSE Manager parlance.
   - Onboarding a new system using a *bootstrap script* with an assigned Activation key
-    - Note: This is intended to be used for mass registration 
+    - Note: This is intended to be used for mass registration
     - In the left menu, go to `Admin` -> `Manager Configuration` -> `Bootstrap Script`, to reach the bootstrap script configuration. Let's fill the fields here.
       - `SUSE Manager server hostname`: This should be set to the hostname that the client systems (a.k.a. minions) will use to reach SUSE Manager, as well as the SUSE Manager hostname
         - Note: a Certificate will be used associated to this name for the client systems, as it was configured in the initial setup. If it's changed, a new certificate shall be created
@@ -106,10 +106,13 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
 - Apply high state and the minion will be migrate to SLL/SLES-ES
   - The high state apply with apply the configuration channel and migrate the machine to Liberty Linux
 
-### For systems that are already registered in SUSE Manager
-- Note: The channel could be assigned to any already registered system on the system's page in `States` -> `Configuration Channels`
-- Hacked the change channels feature to allow change channel to SLL9 (needs to be refactored, since the code is now hard coding the channel label) - https://github.com/rjmateus/uyuni/tree/uyuni_hackweek23_rhel_migration
-- Assign the Configuration channel
+### For already registered minions
+
+Note: Configuration channels could be assigned to any already registered system.
+
+- Assign the right Liberty channels to the minion
+  - Hacked the change channels feature to allow change channel to SLL9 (needs to be refactored, since the code is now hard coding the channel label) - https://github.com/rjmateus/uyuni/tree/uyuni_hackweek23_rhel_migration
+- Assign the Configuration channel to the registered system on the system's page in `States` -> `Configuration Channels` or in `Configuration` -> `Manager Configuration Channels`
 - Apply high state to system
 
 
@@ -129,3 +132,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
 | Rhel 7      | |
 | Oracle 7    | |
 | Oracle 7    | |
+
+# Notes
+
+Analyze if the workaround for EL flavors different from RHEL and CentOS can be removed. Check project https://build.suse.de/package/view_file/SUSE:SLL-9:Import/sll-release/sll-release.spec?expand=1
