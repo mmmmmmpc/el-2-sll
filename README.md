@@ -20,7 +20,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
     - Go to `Users` -> `Organization Credentials` and copy your Organization Username and Password
   - In your own instance of SUSE Manager
     - Go to `Admin` -> `Setup Wizard` -> `Organization Credentials`
-    - Click on `Add new credential` An use the Username and Paswword provided in SCC and obtained in previous step
+    - Click `Add new credential` and use the Username and Paswword provided in SCC and obtained in previous step
 - Sync the SLL/SLES-ES channels in SUSE Manager
   - Go to `Admin` -> `Setup Wizard` -> `Products`
   - Select the SUSE Liberty Linux Channels that you will use:
@@ -35,7 +35,7 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
   - Then, to the new Activation Key, add the following content:
     - `Description`: with some tech describing the acitvation key
     - `Key`: With the identifier for the key, for example `el9-default` for your EL9 systems
-      - Note: Keys will have a numeric prefix depending on the organization so that there are not two equal keys in the same SUSE Manager
+      - Note: Keys will have a numeric prefix depending on the organization so that there are not to equal keys in the same SUSE Manager
     - `Usage`: Leave blank
     - `Base Channel`: Select one base channel. Depending on your EL version the base channel will be:
         - EL7: `RHEL x86_64 Server 7`
@@ -54,8 +54,8 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
     - `Label`: provide a label to the channel, for example `el-2-sll`
     - `Description`: provide some descriptive text
     - `SLS Contents`: In here you have to copy the contents from the [init.sls](init.sls) file in this repository and paste them in the box
-    - Once completed all the stepsm, click `Create Config State Channel` and you will have the channel created
-  - Note: with the contents of `init.sls` in this repository the state will:
+    - Once completed all the steps, click `Create Config State Channel` and you will have the channel created
+  - Note: with the contents of init.sls in this repository the state will:
     - remove `/usr/share/redhat-release`: DONE
     - remove `/etc/dnf/protected.d/redhat-release.conf`: DONE
     - install SLL package: DONE
@@ -78,9 +78,9 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
       - `SSH Port`: Leave blank to use default, which is `22`
       - `User`: type user or leave blank for `root`
       - `Authentication Method`: Select if you want to use `password` or provide a `SSH Private Key`
-        - `Password`: If this was selected please provide the password to access the system
-        - `SSH Private Key`: If this was selected please provide the file with the private key
-          - `SSH Private Key Passphrase`: In case a private key was provided that requires a passphrase to unlock, please provide it here.
+        - `Password`: If this was selected provide the password to access the system
+        - `SSH Private Key`: If this was selected provide the file with the private key
+          - `SSH Private Key Passphrase`: In case a private key was provided that requires a passphrase to unlock, provide it here.
       - `Activation Key`: Select from the menu the Activation key to be used, for example `el9-default`.
       - `Reactivation Key`: Leave blank it wont be used here
       - `Proxy`: Leave as `None` as it is used for the SUSE Manager specific proxies.
@@ -88,10 +88,10 @@ https://hackweek.opensuse.org/23/projects/use-uyuni-to-migrate-el-linux-to-sll
       - Note: A message will show in the top of the page stating that the system is being registered, or "bootstraped" in SUSE Manager parlance.
   - Onboarding a new system using a *bootstrap script* with an assigned Activation key
     - Note: This is intended to be used for mass registration
-    - In the left menu, go to `Admin` -> `Manager Configuration` -> `Bootstrap Script`, to reach the bootstrap script configuration. Let's fill the fields here.
+    - In the left menu, go to `Admin` -> `Manager Configuration` -> `Bootstrap Script`, to reach the bootstrap script configuration. Fill the fields here.
       - `SUSE Manager server hostname`: This should be set to the hostname that the client systems (a.k.a. minions) will use to reach SUSE Manager, as well as the SUSE Manager hostname
         - Note: a Certificate will be used associated to this name for the client systems, as it was configured in the initial setup. If it's changed, a new certificate shall be created
-      - `SSL cert location`: Path, in the SUSE Manager server, to the filename provided as a certificate to register it. Please keep it as it is.
+      - `SSL cert location`: Path, in the SUSE Manager server, to the filename provided as a certificate to register it. Keep it as it is.
       - `Bootstrap using Salt`: Select this checkbox to apply salt states, like the one we added via configuration channel. It is required to perform the conversion.
       - `Enable Client GPG checking`: Select this checkbox to ensure all packages installed come from the proper sources, in this case, SUSE Liberty Linux signed packages.
       - `Enable Remote Configuration`: Leave unchecked.
